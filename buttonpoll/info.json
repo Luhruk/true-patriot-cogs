@@ -1,0 +1,26 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Cog-Creators/Red-DiscordBot/V3/develop/schema/red_cog.schema.json",
+    "author": [
+        "Vexed (@vexingvexed)"
+    ],
+    "end_user_data_statement": "This cog stores user IDs paired with guild IDs and how they voted if a user participated in a poll. This is to ensure no double voting can happen. This data is removed once a poll finishes. No other data or metadata about users is persistently stored. This cog respects data deletion requests.",
+    "install_msg": "Thanks for installing! Load the cog and get started with the `buttonpoll` command.\n\nThis cog has docs! Check them out at <https://go.vexcodes.com/c/buttonpoll>",
+    "min_bot_version": "3.5.1",
+    "min_python_version": [
+        3,
+        8,
+        1
+    ],
+    "name": "ButtonPoll",
+    "requirements": [
+        "plotly",
+        "kaleido",
+        "pandas"
+    ],
+    "short": "A poll in Discord, but with powered by buttons and with a pie chart at the end!",
+    "tags": [
+        "utility",
+        "poll",
+        "button"
+    ]
+}
