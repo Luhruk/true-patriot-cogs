@@ -1,0 +1,20 @@
+{
+    "author": [
+        "YamiKaitou#8975"
+    ],
+    "name": "EconomyTrickle",
+    "short": "Trickle credits into your economy",
+    "description": "Automatically trickle some credits into your bot's economy",
+    "tags": [
+        "economy",
+        "trickle"
+    ],
+    "requirements": [
+        "tabulate"
+    ],
+    "min_bot_version": "3.5.0",
+    "end_user_data_statement": "This cog does not persistently store end user data.",
+    "hidden": false,
+    "disabled": false,
+    "install_msg": "Thanks for installing the cog. I'm in the Cog Support server if you need help with anything. Make sure you take a look under `[p]economytrickle` before getting started, the settings are all set to 0 by default"
+}
