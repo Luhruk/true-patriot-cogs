@@ -1,0 +1,20 @@
+{
+    "author": ["AAA3A"],
+    "name": "Reminders",
+    "install_msg": "Thank you for installing this cog!\nDo `[p]help CogName` to get the list of commands and their description. If you like my work, please consider donating on my [Buy Me a Coffee page](<https://www.buymeacoffee.com/aaa3a>)!",
+    "short": "Don't forget anything anymore! Reminders in DMs, channels, FIFO commands scheduler, say scheduler... With 'Me Too', snooze and buttons.",
+    "description": "Don't forget anything anymore! Reminders in DMs, channels, FIFO commands scheduler, say scheduler... With 'Me Too', snooze and buttons. You can migrate reminders from RemindMe by PhasecoreX.",
+    "tags": [
+        "remind",
+        "time",
+        "message",
+        "bell",
+        "schedule",
+        "fifo",
+        "command",
+        "say"
+    ],
+    "requirements": ["git+https://github.com/AAA3A-AAA3A/AAA3A_utils.git", "pytz", "python-dateutil", "dateparser", "pyparsing", "validators", "apscheduler", "cron-descriptor", "recurrent"],
+    "min_bot_version": "3.5.0",
+    "end_user_data_statement": "This cog does store users reminders, who are deleted when triggered. The content of the 5 next user's reminders can be communicated to OpenAI if the user requests information on their own existing reminders using the Vert's Assistant cog."
+}
