@@ -29,11 +29,11 @@ class BankDecay(Admin, Listeners, commands.Cog, metaclass=CompositeMetaClass):
     Economy decay!
 
     Periodically reduces users' Liberty Link Credits based on inactivity, encouraging engagement.
-    Server admins can configure decay parameters, view settings, and manually trigger decay cycles.
+    Staff can configure decay parameters, view settings, and manually trigger decay cycles.
     User activity is tracked via messages and reactions.
     """
 
-    __author__ = "Vertyco#0117"
+    __author__ = "Vertyco#0117 ft. Luhruk"
     __version__ = "0.3.8"
 
     def __init__(self, bot: Red):
