@@ -28,7 +28,7 @@ class BankDecay(Admin, Listeners, commands.Cog, metaclass=CompositeMetaClass):
     """
     Economy decay!
 
-    Periodically reduces users' red currency based on inactivity, encouraging engagement.
+    Periodically reduces users' Liberty Link Credits based on inactivity, encouraging engagement.
     Server admins can configure decay parameters, view settings, and manually trigger decay cycles.
     User activity is tracked via messages and reactions.
     """
