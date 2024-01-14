@@ -1,0 +1,17 @@
+{
+    "author": [
+        "flare(flare#0001)"
+    ],
+    "install_msg": "Bump threads to keep them alive forever.",
+    "name": "ThreadBumper",
+    "disabled": false,
+    "hidden": false,
+    "short": "Bump threads to keep them alive forever.",
+    "description": "Bump threads to keep them alive forever.",
+    "tags": [
+        "threads",
+        "bump",
+        "thread bumping"
+    ],
+    "min_bot_version": "3.5.0"
+}
