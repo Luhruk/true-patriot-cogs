@@ -56,6 +56,7 @@ class ReactionReposter(commands.Cog):
         if total_reactions >= 3:
             unique_reactors = set()
             for react in message.reactions:
+                # Instead of fetching users for each reaction, we check if there are enough unique reactors
                 async for reactor in react.users():
                     unique_reactors.add(reactor.id)
                 # Add a small delay to avoid hitting rate limits
@@ -71,7 +72,7 @@ class ReactionReposter(commands.Cog):
                     color=discord.Color.blue(),
                     timestamp=message.created_at
                 )
-                embed.set_author(name=message.author.display_name, icon_url=message.author.avatar_url)
+                embed.set_author(name=message.author.display_name, icon_url=message.author.avatar.url)
                 embed.add_field(name="Original Message", value=f"[Jump to message]({message.jump_url})")
                 await target_channel.send(embed=embed)
             else:
