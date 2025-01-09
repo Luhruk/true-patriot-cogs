@@ -1,3 +1,4 @@
+import asyncio
 from redbot.core import commands, Config
 import discord
 
@@ -57,6 +58,8 @@ class ReactionReposter(commands.Cog):
             for react in message.reactions:
                 async for reactor in react.users():
                     unique_reactors.add(reactor.id)
+                # Add a small delay to avoid hitting rate limits
+                await asyncio.sleep(0.2)  # Adjust this value as needed
 
             # Debug: Check unique reactors
             print(f"Unique Reactors: {len(unique_reactors)}")
