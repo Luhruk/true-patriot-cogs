@@ -9,6 +9,7 @@ class ReactionReposter(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_guild(target_channel=None)
+        self.reposted_messages = set()  # Set to keep track of reposted messages
 
     @commands.group()
     @commands.guild_only()
@@ -48,6 +49,11 @@ class ReactionReposter(commands.Cog):
             print(f"Invalid target channel for {guild.name}. Skipping.")
             return
 
+        # Check if the message has already been reposted
+        if message.id in self.reposted_messages:
+            print(f"Message {message.id} already reposted. Skipping.")
+            return
+
         # Debug: Check total reactions
         total_reactions = sum(react.count for react in message.reactions)
         print(f"Message ID: {message.id}, Total Reactions: {total_reactions}")
@@ -75,6 +81,9 @@ class ReactionReposter(commands.Cog):
                 embed.set_author(name=message.author.display_name, icon_url=message.author.avatar.url)
                 embed.add_field(name="Original Message", value=f"[Jump to message]({message.jump_url})")
                 await target_channel.send(embed=embed)
+
+                # Mark the message as reposted
+                self.reposted_messages.add(message.id)
             else:
                 print(f"Not enough unique reactors. Skipping.")
         else:
