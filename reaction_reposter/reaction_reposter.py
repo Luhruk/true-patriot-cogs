@@ -17,7 +17,8 @@ class ReactionReposter(commands.Cog):
     async def reposterset(self, ctx):
         """Configuration commands for Reaction Reposter."""
         if ctx.invoked_subcommand is None:
-            await ctx.send_help()
+            # Only send help if no subcommand was invoked
+            await ctx.send_help(self.reposterset)
 
     @reposterset.command()
     async def setchannel(self, ctx, channel: discord.TextChannel):
