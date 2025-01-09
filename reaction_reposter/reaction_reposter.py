@@ -43,13 +43,16 @@ class ReactionReposter(commands.Cog):
         if not target_channel:
             return
 
-        # Check if the message has 3 or more unique reactions
-        if len(reaction.message.reactions) >= 3:
+        # Check if the message has 3 or more reactions in total
+        total_reactions = sum(react.count for react in message.reactions)
+        
+        if total_reactions >= 3:
             unique_reactors = set()
-            for react in reaction.message.reactions:
+            for react in message.reactions:
                 async for reactor in react.users():
                     unique_reactors.add(reactor.id)
 
+            # Ensure there are 3 unique reactors
             if len(unique_reactors) >= 3:
                 embed = discord.Embed(
                     description=message.content,
