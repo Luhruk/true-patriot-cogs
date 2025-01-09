@@ -80,6 +80,15 @@ class ReactionReposter(commands.Cog):
                 )
                 embed.set_author(name=message.author.display_name, icon_url=message.author.avatar.url)
                 embed.add_field(name="Original Message", value=f"[Jump to message]({message.jump_url})")
+
+                # Add attachments if any
+                for attachment in message.attachments:
+                    if attachment.height:  # Image or video
+                        embed.set_image(url=attachment.url)  # Set the first image/video as the embed image
+                    else:
+                        # If it's a file, send it as an attachment
+                        await target_channel.send(file=discord.File(attachment.url, filename=attachment.filename))
+
                 await target_channel.send(embed=embed)
 
                 # Mark the message as reposted
