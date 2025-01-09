@@ -3,12 +3,12 @@ from redbot.core import commands, Config
 import discord
 
 class ReactionReposter(commands.Cog):
-    """A cog to repost messages with 3 or more reactions to a different channel."""
+    """A cog to repost messages with a configurable number of reactions to a different channel."""
 
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
-        self.config.register_guild(target_channel=None)
+        self.config.register_guild(target_channel=None, reaction_threshold=3)  # Default threshold is 3
         self.reposted_messages = set()  # Set to keep track of reposted messages
 
     @commands.group()
@@ -24,6 +24,15 @@ class ReactionReposter(commands.Cog):
         """Set the channel where messages will be reposted."""
         await self.config.guild(ctx.guild).target_channel.set(channel.id)
         await ctx.send(f"Repost channel set to {channel.mention}")
+
+    @reposterset.command()
+    async def setthreshold(self, ctx, threshold: int):
+        """Set the number of reactions required to repost a message."""
+        if threshold < 1:
+            await ctx.send("Threshold must be at least 1.")
+            return
+        await self.config.guild(ctx.guild).reaction_threshold.set(threshold)
+        await ctx.send(f"Repost threshold set to {threshold} reactions.")
 
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
@@ -54,12 +63,16 @@ class ReactionReposter(commands.Cog):
             print(f"Message {message.id} already reposted. Skipping.")
             return
 
+        # Get the reaction threshold for this guild
+        threshold = await self.config.guild(guild).reaction_threshold()
+        print(f"Reaction threshold for {guild.name}: {threshold}")
+
         # Debug: Check total reactions
         total_reactions = sum(react.count for react in message.reactions)
         print(f"Message ID: {message.id}, Total Reactions: {total_reactions}")
 
-        # Check if the message has 3 or more reactions
-        if total_reactions >= 3:
+        # Check if the message has enough reactions
+        if total_reactions >= threshold:
             unique_reactors = set()
             for react in message.reactions:
                 # Instead of fetching users for each reaction, we check if there are enough unique reactors
@@ -71,8 +84,8 @@ class ReactionReposter(commands.Cog):
             # Debug: Check unique reactors
             print(f"Unique Reactors: {len(unique_reactors)}")
 
-            # Ensure there are 3 unique reactors
-            if len(unique_reactors) >= 3:
+            # Ensure there are enough unique reactors
+            if len(unique_reactors) >= threshold:
                 embed = discord.Embed(
                     description=message.content,
                     color=discord.Color.blue(),
