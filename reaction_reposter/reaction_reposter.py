@@ -9,8 +9,11 @@ class ReactionReposter(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_guild(
-            target_channel=None, reaction_threshold=3, excluded_channels=[]
-        )  # Default threshold is 3, no excluded channels
+            target_channel=None,
+            reaction_threshold=3,
+            excluded_channels=[],
+            ignore_bot_messages=True,  # Default to ignoring bot messages
+        )
         self.reposted_messages = set()  # Set to keep track of reposted messages
 
     @commands.group()
@@ -56,6 +59,13 @@ class ReactionReposter(commands.Cog):
             else:
                 await ctx.send(f"{channel.mention} is not excluded.")
 
+    @reposterset.command()
+    async def ignorebot(self, ctx, toggle: bool):
+        """Set whether to ignore messages created by the bot."""
+        await self.config.guild(ctx.guild).ignore_bot_messages.set(toggle)
+        status = "ignoring" if toggle else "not ignoring"
+        await ctx.send(f"The bot is now {status} messages created by itself.")
+
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
         if user.bot:
@@ -65,6 +75,11 @@ class ReactionReposter(commands.Cog):
         guild = message.guild
 
         if not guild:
+            return
+
+        # Check if ignoring bot messages
+        ignore_bot_messages = await self.config.guild(guild).ignore_bot_messages()
+        if ignore_bot_messages and message.author.bot:
             return
 
         target_channel_id = await self.config.guild(guild).target_channel()
